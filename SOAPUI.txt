@@ -1,0 +1,3 @@
+https://www.soapui.org/
+
+http://www.dneonline.com/calculator.asmx?wsdl

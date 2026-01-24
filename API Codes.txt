@@ -1,0 +1,45 @@
+const express = require("express");
+const app = express();
+
+app.use(express.json());
+
+let users = [
+  { id: 1, name: "Leanne Graham", email: "leanne@gmail.com" }
+];
+
+// GET
+app.get("/users", (req, res) => {
+  res.json(users);
+});
+
+// POST
+app.post("/users", (req, res) => {
+  const newUser = { id: users.length + 1, ...req.body };
+  users.push(newUser);
+  res.status(201).json(newUser);
+});
+
+// PUT
+app.put("/users/:id", (req, res) => {
+  users = users.map(u =>
+    u.id == req.params.id ? { id: u.id, ...req.body } : u
+  );
+  res.json(users.find(u => u.id == req.params.id));
+});
+
+// PATCH
+app.patch("/users/:id", (req, res) => {
+  const user = users.find(u => u.id == req.params.id);
+  Object.assign(user, req.body);
+  res.json(user);
+});
+
+// DELETE
+app.delete("/users/:id", (req, res) => {
+  users = users.filter(u => u.id != req.params.id);
+  res.json({ message: "User deleted" });
+});
+
+app.listen(3000, () => {
+  console.log("Server running on http://localhost:3000");
+});
